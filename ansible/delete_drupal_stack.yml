@@ -1,0 +1,10 @@
+---
+
+- name: Delete Drupal stack
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - 'vars/{{ env }}/aws.yml'
+
+  roles:
+    - delete_stack

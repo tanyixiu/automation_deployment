@@ -1,0 +1,21 @@
+
+- name: Create Drupal stack resources from cloudformation
+  cloudformation:
+    stack_name: "{{ AWS.stack_name }}"
+    state: "present"
+    region: "{{ AWS.region }}"
+    aws_access_key: "{{ AWS.access_key }}"
+    aws_secret_key: "{{ AWS.secret_key }}"
+    template: "{{ Common.working_directory }}/ansible/roles/create_stack/files/drupal_stack.yml"
+    template_parameters:
+      KeyName: "{{ AWS.key_name }}"
+      EC2ImageId: "{{ AWS.ec2_image_id}}"
+      EC2InstanceTag: "{{ AWS.ec2_instance_tag }}"
+      SecurityGroupId: "{{ AWS.security_group_id}}"
+      EC2InstanceType: "{{ AWS.ec2_instance_type }}"
+      AvailabilityZone: "{{ AWS.availability_zone}}"
+      SubnetId: "{{ AWS.subnet_id }}"
+  register: drupal_stack_msg
+
+- name: Print drupal_stack_msg
+  debug: msg="{{ drupal_stack_msg }}"

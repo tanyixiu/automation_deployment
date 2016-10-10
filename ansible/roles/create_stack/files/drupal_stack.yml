@@ -1,0 +1,86 @@
+---
+Description: "Create Drupal Stack Resources"
+
+Parameters:
+  KeyName:
+    Type: String
+  EC2InstanceTag:
+    Type: String
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+  SecurityGroupId:
+    Type: String
+    Default: sg-f42f0390
+  EC2ImageId:
+    Type: String
+    Default: ami-374db956
+  AvailabilityZone:
+    Type: String
+  SubnetId:
+    Type: String
+  MinEC2Count:
+    Type: String
+    Default: 2
+  MaxEC2Count:
+    Type: String
+    Default: 3
+
+
+
+
+
+Resources:
+  MyElasticLoadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      CrossZone: true
+      AvailabilityZones:
+        - !Ref AvailabilityZone
+      SecurityGroups:
+        - !Ref SecurityGroupId
+      Listeners:
+        - LoadBalancerPort: 80
+          InstancePort: 80
+          Protocol: HTTP
+
+  MyLaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          - install_httpd
+        install_httpd:
+          commands:
+            begin:
+              command: "echo hi>>tyx.txt"
+
+    Properties:
+      KeyName: !Ref KeyName
+      ImageId: !Ref EC2ImageId
+      InstanceType: !Ref EC2InstanceType
+      AssociatePublicIpAddress: true
+      SecurityGroups:
+        - !Ref SecurityGroupId
+      UserData:
+#        Fn::Base64: !Join ["",["#!/bin/bash \n echo hi >>/home/ec2-user/tyx.txt"]]
+        Fn::Base64: !Join ["",["#include \n echo hi >>/home/ec2-user/tyx.txt"]]
+
+  MyAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      MinSize: !Ref MinEC2Count
+      MaxSize: !Ref MaxEC2Count
+      LaunchConfigurationName: !Ref MyLaunchConfig
+      AvailabilityZones:
+        - !Ref AvailabilityZone
+      VPCZoneIdentifier:
+        - !Ref SubnetId
+      LoadBalancerNames:
+        - !Ref MyElasticLoadBalancer
+
+Outputs:
+  ElbDNS:
+    Description: "The ELB DNS Name"
+    Value: !GetAtt [MyElasticLoadBalancer,DNSName]
+

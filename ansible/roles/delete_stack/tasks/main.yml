@@ -1,0 +1,8 @@
+- name: Delete the Drupal stack resources
+  ignore_errors: yes
+  cloudformation:
+    stack_name: "{{ AWS.stack_name }}"
+    region: "{{ AWS.region }}"
+    aws_access_key: "{{ AWS.access_key }}"
+    aws_secret_key: "{{ AWS.secret_key }}"
+    state: "absent"
