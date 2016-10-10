@@ -1,2 +1,2 @@
 #! /bin/bash
-echo hello>>/home/ec2-user/tmp.txt
+echo hello>>/home/ec2-user/temp.txt
