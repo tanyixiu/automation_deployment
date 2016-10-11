@@ -19,14 +19,15 @@ Parameters:
     Type: String
   SubnetId:
     Type: String
-  MinEC2Count:
+  EC2MinCount:
     Type: String
-    Default: 2
-  MaxEC2Count:
+    Default: 1
+  EC2MaxCount:
     Type: String
-    Default: 3
-
-
+    Default: 1
+  EC2ProvisionScriptUrl:
+    Type: String
+    Default: https://raw.githubusercontent.com/tanyixiu/automation_deployment/master/ansible/roles/create_stack/files/drupal_server_provision.sh
 
 
 
@@ -44,33 +45,11 @@ Resources:
           InstancePort: 80
           Protocol: HTTP
 
-  MyLaunchConfig:
-    Type: AWS::AutoScaling::LaunchConfiguration
-    Metadata:
-      AWS::CloudFormation::Init:
-        configSets:
-          - install_httpd
-        install_httpd:
-          commands:
-            begin:
-              command: "echo hi>>tyx.txt"
-
-    Properties:
-      KeyName: !Ref KeyName
-      ImageId: !Ref EC2ImageId
-      InstanceType: !Ref EC2InstanceType
-      AssociatePublicIpAddress: true
-      SecurityGroups:
-        - !Ref SecurityGroupId
-      UserData:
-#        Fn::Base64: !Join ["",["#!/bin/bash \n echo hi >>/home/ec2-user/tyx.txt"]]
-        Fn::Base64: !Join ["",["#include \n echo hi >>/home/ec2-user/tyx.txt"]]
-
   MyAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      MinSize: !Ref MinEC2Count
-      MaxSize: !Ref MaxEC2Count
+      MinSize: !Ref EC2MinCount
+      MaxSize: !Ref EC2MaxCount
       LaunchConfigurationName: !Ref MyLaunchConfig
       AvailabilityZones:
         - !Ref AvailabilityZone
@@ -79,8 +58,26 @@ Resources:
       LoadBalancerNames:
         - !Ref MyElasticLoadBalancer
 
+  MyLaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      KeyName: !Ref KeyName
+      ImageId: !Ref EC2ImageId
+      InstanceType: !Ref EC2InstanceType
+      AssociatePublicIpAddress: true
+      SecurityGroups:
+        - !Ref SecurityGroupId
+      UserData:
+        Fn::Base64: !Join ["\n",["DNS=WELL",
+
+                                 "#include",
+                                 !Ref EC2ProvisionScriptUrl,
+
+                                ]
+                          ]
+
+
 Outputs:
   ElbDNS:
     Description: "The ELB DNS Name"
     Value: !GetAtt [MyElasticLoadBalancer,DNSName]
-

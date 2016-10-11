@@ -15,6 +15,9 @@
       EC2InstanceType: "{{ AWS.ec2_instance_type }}"
       AvailabilityZone: "{{ AWS.availability_zone}}"
       SubnetId: "{{ AWS.subnet_id }}"
+      EC2MinCount: "{{ AWS.ec2_min_count }}"
+      EC2MaxCount: "{{ AWS.ec2_max_count }}"
+
   register: drupal_stack_msg
 
 - name: Print drupal_stack_msg
