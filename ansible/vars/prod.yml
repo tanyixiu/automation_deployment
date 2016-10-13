@@ -1,4 +1,8 @@
 ---
+Artefact:
+  url: https://github.com/tanyixiu/drupal-practice.git
+
+
 AWS:
 
   access_key: "{{ aws_access_key }}"
@@ -15,3 +19,6 @@ AWS:
   ec2_min_count: 2
   ec2_max_count: 2
 
+
+Common:
+  working_directory: "{{ working_directory }}"

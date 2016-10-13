@@ -3,9 +3,10 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-  - 'vars/{{ env }}/aws.yml'
+  - 'vars/{{ env }}.yml'
   roles:
-  - resources/get_resources
+  - resources/get_resources/get_ec2_host
+  - resources/get_resources/get_rds_host
 
 
 - name: deploy drupal application
