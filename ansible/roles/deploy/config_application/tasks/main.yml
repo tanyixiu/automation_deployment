@@ -1,0 +1,9 @@
+- name: make files writeable
+  file: path=/var/www/html/sites/default/files mode=777 state=directory
+
+- name: make settings.php writeable
+  file: path=/var/www/html/sites/default/settings.php mode=666 state=file
+
+- name: Config Database Host
+  shell: sed -i 's/drupal-db-instance/{{ rds_host }}/g' /var/www/html/sites/default/settings.php
+  notify: restart httpd

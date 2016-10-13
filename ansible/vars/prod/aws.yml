@@ -1,7 +1,17 @@
 ---
-
 AWS:
-  region: "{{ aws_region }}"
+
   access_key: "{{ aws_access_key }}"
   secret_key: "{{ aws_secret_key }}"
+  stack_name: "DruplaWebStack-{{ env }}"
+  ec2_instance_tag: "DrupalWebServer-{{ env }}"
+  region: ap-northeast-1
+  key_name: tokyo-instance-key
   ec2_instance_type: t2.micro
+  ec2_image_id: ami-374db956
+  security_group_id: sg-f42f0390
+  availability_zone: ap-northeast-1a
+  subnet_id: subnet-1401ca62
+  ec2_min_count: 2
+  ec2_max_count: 2
+

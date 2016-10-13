@@ -5,13 +5,13 @@
   vars_files:
   - 'vars/{{ env }}/aws.yml'
   roles:
-  - resources/get_resources/get_ec2_host
+  - resources/get_resources
 
 
-- name: provision drupal resources
+- name: deploy drupal application
   hosts: webserver
   become: true
   gather_facts: true
   roles:
-  - provision/install_tools
-  - provision/config_access
+  - deploy/config_application
+  - deploy/download_artefacts

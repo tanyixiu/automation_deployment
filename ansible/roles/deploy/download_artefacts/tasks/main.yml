@@ -1,0 +1,10 @@
+- name: delete drupal
+  ignore_errors: yes
+  shell: "rm -rf /var/www/html/*"
+
+- name: delete drupal hidden files
+  ignore_errors: yes
+  shell: "rm -rf /var/www/html/.* 2>>/dev/null"
+
+- name: install drupal
+  git: repo={{ Artefact.url }} dest=/var/www/html

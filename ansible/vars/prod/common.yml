@@ -1,4 +1,3 @@
 ---
-
 Common:
   working_directory: "{{ working_directory }}"

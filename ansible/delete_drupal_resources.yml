@@ -1,6 +1,5 @@
 ---
-
-- name: Delete Drupal stack
+- name: delete drupal stack
   hosts: localhost
   gather_facts: false
   vars_files:
