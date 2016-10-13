@@ -25,9 +25,9 @@ Parameters:
   EC2MaxCount:
     Type: String
     Default: 1
-  EC2ProvisionScriptUrl:
-    Type: String
-    Default: https://raw.githubusercontent.com/tanyixiu/automation_deployment/master/ansible/roles/create_stack/files/drupal_server_provision.sh
+#  EC2ProvisionScriptUrl:
+#    Type: String
+#    Default: https://raw.githubusercontent.com/tanyixiu/automation_deployment/master/ansible/roles/create_stack/files/drupal_server_provision.sh
 
 
 
@@ -67,17 +67,16 @@ Resources:
       AssociatePublicIpAddress: true
       SecurityGroups:
         - !Ref SecurityGroupId
-      UserData:
-        Fn::Base64: !Join ["\n",["DNS=WELL",
-
-                                 "#include",
-                                 !Ref EC2ProvisionScriptUrl,
-
-                                ]
-                          ]
+#      UserData:
+#        Fn::Base64: !Join ["\n",["#include",!Ref EC2ProvisionScriptUrl ]]
 
 
 Outputs:
+
   ElbDNS:
     Description: "The ELB DNS Name"
-    Value: !GetAtt [MyElasticLoadBalancer,DNSName]
+    Value: !GetAtt [MyElasticLoadBalancer, DNSName]
+
+  AutoScalingGroup:
+    Description: "MyAutoScalingGroup"
+    Value: !Ref MyAutoScalingGroup

@@ -13,6 +13,6 @@ AWS:
   security_group_id: sg-f42f0390
   availability_zone: ap-northeast-1a
   subnet_id: subnet-1401ca62
-  ec2_min_count: 1
-  ec2_max_count: 1
+  ec2_min_count: 2
+  ec2_max_count: 2
 

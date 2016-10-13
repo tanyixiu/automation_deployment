@@ -1,5 +1,5 @@
 
-- name: Create Drupal stack resources from cloudformation
+- name: create drupal stack resources from cloudformation
   cloudformation:
     stack_name: "{{ AWS.stack_name }}"
     state: "present"
@@ -20,5 +20,5 @@
 
   register: drupal_stack_msg
 
-- name: Print drupal_stack_msg
+- name: print drupal_stack_msg
   debug: msg="{{ drupal_stack_msg }}"

@@ -11,7 +11,7 @@ node {
         sh'''
         export PATH=$PATH:/usr/local/bin
         cd automation_deployment
-        ./start_create_drupal_stack.sh
+        ./start_create_drupal_resources.sh
        '''
     }
 }

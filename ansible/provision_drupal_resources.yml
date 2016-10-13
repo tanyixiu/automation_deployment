@@ -1,0 +1,19 @@
+---
+- name: Get Drupal resources
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+  - 'vars/{{ env }}/aws.yml'
+  roles:
+  - resources/get_resources
+
+
+- name: Provision Drupal resources
+  hosts: webserver
+  become: true
+  gather_facts: true
+  roles:
+  - provision/install_tools
+  - provision/config_access
+
+

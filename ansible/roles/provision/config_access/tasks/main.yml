@@ -1,0 +1,12 @@
+- name: add group "www"
+  group: name=www state=present
+
+- name: add ec2-user to "www" group
+  user: name=ec2-user groups=www state=present append=yes
+
+- name: change owner and mode of /var/www
+  file: path=/var/www state=directory group=www mode=2755 recurse=yes
+
+- name: change /var/www file mode
+  shell: "find /var/www -type f -exec sudo chmod 0664 {} +"
+

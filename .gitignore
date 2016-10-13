@@ -1,2 +1,2 @@
 .idea/
-ansible/create_drupal_stack.retry
+ansible/provision_drupal_resources.retry

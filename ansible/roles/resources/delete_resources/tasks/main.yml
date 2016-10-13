@@ -1,4 +1,4 @@
-- name: Delete the Drupal stack resources
+- name: delete the drupal stack resources
   ignore_errors: yes
   cloudformation:
     stack_name: "{{ AWS.stack_name }}"

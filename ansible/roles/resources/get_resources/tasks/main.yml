@@ -1,0 +1,11 @@
+- name: get ec2 ips
+  shell: "aws ec2 describe-instances \
+          --filters 'Name=tag:aws:cloudformation:stack-name,Values=DruplaWebStack-nonprod' \
+                    'Name=instance-state-name,Values=running' \
+          --query 'Reservations[*].Instances[*].PublicIpAddress' \
+          --output text"
+  register: ec2ips
+
+- name: add ec2 ips to webserver group
+  add_host: hostname={{ item }} groupname=webserver
+  with_items: "{{ ec2ips.stdout_lines.0.split('\t')}}"

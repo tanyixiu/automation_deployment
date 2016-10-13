@@ -4,7 +4,7 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - 'vars/{{ env }}/aws.yml'
+  - 'vars/{{ env }}/aws.yml'
 
   roles:
-    - delete_stack
+  - resources/delete_resources
