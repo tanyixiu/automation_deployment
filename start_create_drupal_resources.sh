@@ -3,7 +3,7 @@
 WORKING_DIRECTORY=`pwd`
 ENV='nonprod'
 
-ansible-playbook ./ansible/create_drupal_stack.yml --extra-vars="
+ansible-playbook ./ansible/create_drupal_resources.yml --extra-vars="
 
   env='$ENV'
   aws_access_key='$AWS_ACCESS_KEY'

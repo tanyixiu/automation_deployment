@@ -6,7 +6,7 @@
     region: "{{ AWS.region }}"
     aws_access_key: "{{ AWS.access_key }}"
     aws_secret_key: "{{ AWS.secret_key }}"
-    template: "{{ Common.working_directory }}/ansible/roles/create_stack/files/drupal_stack.yml"
+    template: "{{ Common.working_directory }}/ansible/roles/resources/create_resources/files/drupal_stack.yml"
     template_parameters:
       KeyName: "{{ AWS.key_name }}"
       EC2ImageId: "{{ AWS.ec2_image_id}}"
@@ -17,6 +17,8 @@
       SubnetId: "{{ AWS.subnet_id }}"
       EC2MinCount: "{{ AWS.ec2_min_count }}"
       EC2MaxCount: "{{ AWS.ec2_max_count }}"
+      RDSInstanceClass: "{{ AWS.rds_instance_class }}"
+      RDSSnapshotIdentifier: "{{ AWS.rds_snapshot_identifier}}"
 
   register: drupal_stack_msg
 

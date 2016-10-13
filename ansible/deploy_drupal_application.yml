@@ -13,6 +13,10 @@
   hosts: webserver
   become: true
   gather_facts: true
+  vars_files:
+  - 'vars/{{ env }}.yml'
+  vars:
+    rds_host: "{{ hostvars['localhost'].rds_host }}"
   roles:
-  - deploy/config_application
   - deploy/download_artefacts
+  - deploy/config_application

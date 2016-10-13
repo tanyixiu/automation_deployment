@@ -25,6 +25,18 @@ Parameters:
   EC2MaxCount:
     Type: String
     Default: 1
+  RDSPort:
+    Type: String
+    Default: 3306
+  RDSEngine:
+    Type: String
+    Default: MySQL
+  RDSInstanceClass:
+    Type: String
+    Default: db.t2.micro
+  RDSSnapshotIdentifier:
+    Type: String
+
 #  EC2ProvisionScriptUrl:
 #    Type: String
 #    Default: https://raw.githubusercontent.com/tanyixiu/automation_deployment/master/ansible/roles/create_stack/files/drupal_server_provision.sh
@@ -70,9 +82,19 @@ Resources:
 #      UserData:
 #        Fn::Base64: !Join ["\n",["#include",!Ref EC2ProvisionScriptUrl ]]
 
+  MyRDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBSnapshotIdentifier: !Ref RDSSnapshotIdentifier
+      DBInstanceClass: !Ref RDSInstanceClass
+      Engine: !Ref RDSEngine
+      Port: !Ref RDSPort
+      AvailabilityZone: !Ref AvailabilityZone
+      PubliclyAccessible: true
+      BackupRetentionPeriod: "0"
+
 
 Outputs:
-
   ElbDNS:
     Description: "The ELB DNS Name"
     Value: !GetAtt [MyElasticLoadBalancer, DNSName]
@@ -80,3 +102,7 @@ Outputs:
   AutoScalingGroup:
     Description: "MyAutoScalingGroup"
     Value: !Ref MyAutoScalingGroup
+
+  RDSHost:
+    Description: "The host of RDS"
+    Value: !GetAtt ["MyRDSInstance", "Endpoint.Address"]

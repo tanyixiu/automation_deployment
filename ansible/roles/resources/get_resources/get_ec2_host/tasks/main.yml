@@ -1,6 +1,6 @@
 - name: get ec2 ips
   shell: "aws ec2 describe-instances \
-          --filters 'Name=tag:aws:cloudformation:stack-name,Values=DruplaWebStack-nonprod' \
+          --filters 'Name=tag:aws:cloudformation:stack-name,Values={{ AWS.stack_name }}' \
                     'Name=instance-state-name,Values=running' \
           --query 'Reservations[*].Instances[*].PublicIpAddress' \
           --output text"

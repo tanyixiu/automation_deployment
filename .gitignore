@@ -1,2 +1,4 @@
 .idea/
+ansible/create_drupal_resources.retry
 ansible/provision_drupal_resources.retry
+ansible/deploy_drupal_application.retry

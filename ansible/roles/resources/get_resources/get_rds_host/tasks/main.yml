@@ -1,0 +1,9 @@
+- name: get rds host
+  shell: "aws cloudformation describe-stacks \
+          --stack-name {{ AWS.stack_name }} \
+          --query 'Stacks[*].Outputs['2'].OutputValue'
+          --output text"
+  register: stackinfo
+
+- name: save rds host to variable
+  set_fact: rds_host="{{ stackinfo.stdout_lines.0 }}"
