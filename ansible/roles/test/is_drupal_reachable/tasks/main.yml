@@ -1,0 +1,2 @@
+- name: test drupal is reachable
+  shell: "curl -I {{ drupal_app_url}}"

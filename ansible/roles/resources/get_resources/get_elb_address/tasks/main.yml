@@ -1,0 +1,9 @@
+- name: get elb address
+  shell: "aws cloudformation describe-stacks \
+          --stack-name {{ AWS.stack_name }} \
+          --query 'Stacks[*].Outputs['1'].OutputValue'
+          --output text"
+  register: stackinfo_elb
+
+- name: save elb address to variable
+  set_fact: elb_address="{{ stackinfo_elb.stdout_lines.0 }}"
