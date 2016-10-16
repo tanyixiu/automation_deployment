@@ -3,10 +3,10 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-  - 'vars/{{ env }}.yml'
+    - 'vars/{{ env }}.yml'
   roles:
-  - resources/get_resources/get_ec2_host
-  - resources/get_resources/get_rds_host
+    - resources/get_resources/get_ec2_host
+    - resources/get_resources/get_rds_host
 
 
 - name: deploy drupal application
@@ -14,9 +14,9 @@
   become: true
   gather_facts: true
   vars_files:
-  - 'vars/{{ env }}.yml'
+    - 'vars/{{ env }}.yml'
   vars:
     rds_host: "{{ hostvars['localhost'].rds_host }}"
   roles:
-  - deploy/download_artefacts
-  - deploy/config_application
+    - deploy/download_artefacts
+    - deploy/config_application

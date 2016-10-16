@@ -3,9 +3,9 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-  - 'vars/{{ env }}.yml'
+    - 'vars/{{ env }}.yml'
   roles:
-  - resources/get_resources/get_ec2_host
+    - resources/get_resources/get_ec2_host
 
 
 - name: provision drupal resources
@@ -13,5 +13,5 @@
   become: true
   gather_facts: true
   roles:
-  - provision/install_tools
-  - provision/config_access
+    - provision/install_tools
+    - provision/config_access
