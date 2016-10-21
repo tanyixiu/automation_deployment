@@ -1,7 +1,7 @@
 #!/bin/bash
 
-WORKING_DIRECTORY=`pwd`
 ENV='nonprod'
+WORKING_DIRECTORY=`pwd`
 
 ansible-playbook ./ansible/create_drupal_resources.yml --extra-vars="
 
