@@ -8,3 +8,23 @@
 
 - name: install drupal
   git: repo={{ Artefact.url }} dest=/var/www/html
+
+- name: download db sql
+  s3:
+    aws_access_key: "{{ AWS.access_key }}"
+    aws_secret_key: "{{ AWS.secret_key }}"
+    region: "{{ AWS.region }}"
+    bucket: "{{ Artefact.s3_bucket }}"
+    object: "/{{ Artefact.db_file }}"
+    dest: "/tmp/{{ Artefact.db_file }}"
+    mode: get
+
+- name: import data to db
+  shell: "mysqldump -h {{ rds_host }} \
+              -u{{DB.db_user_name}} \
+              -p{{DB.db_user_pwd}} \
+              --port=3306 \
+              --single-transaction \
+              --routines \
+              --triggers \
+              --databases  {{DB.db_name}} < /tmp/{{ Artefact.db_file }}"

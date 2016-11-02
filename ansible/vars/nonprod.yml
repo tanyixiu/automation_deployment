@@ -1,6 +1,13 @@
 ---
 Artefact:
   url: https://github.com/tanyixiu/drupal-practice.git
+  s3_bucket: drupal-db-bucket
+  db_file: drupal_db.sql
+
+DB:
+  db_name: drupal_db
+  db_user_name: tanyixiu
+  db_user_pwd: tanyixiu
 
 
 AWS:
