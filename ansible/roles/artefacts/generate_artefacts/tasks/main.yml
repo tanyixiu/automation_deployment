@@ -15,7 +15,7 @@
     region: "{{ AWS.region }}"
     bucket: "{{ Artefact.s3_bucket }}"
     object: "/{{ Artefact.db_file }}"
-    dest: "/tmp/{{ Artefact.db_file }}"
+    src: "/tmp/{{ Artefact.db_file }}"
     mode: put
 
 - name: delete tmp file
