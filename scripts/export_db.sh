@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#52.192.223.238
-
 mysqldump -h dm1dhugfpkfnwvd.ceyhvqsgxmc0.ap-northeast-1.rds.amazonaws.com \
     -utanyixiu \
     -ptanyixiu \

@@ -1,0 +1,23 @@
+- name: export db data to file
+  shell: "mysqldump -h {{ rds_host }} \
+              -u{{DB.db_user_name}} \
+              -p{{DB.db_user_pwd}} \
+              --port=3306 \
+              --single-transaction \
+              --routines \
+              --triggers \
+              --databases  {{DB.db_name}} > /tmp/{{ Artefact.db_file }}"
+
+- name: upload db sql to s3 bucket
+  s3:
+    aws_access_key: "{{ AWS.access_key }}"
+    aws_secret_key: "{{ AWS.secret_key }}"
+    region: "{{ AWS.region }}"
+    bucket: "{{ Artefact.s3_bucket }}"
+    object: "/{{ Artefact.db_file }}"
+    dest: "/tmp/{{ Artefact.db_file }}"
+    mode: put
+
+- name: delete tmp file
+  shell: "rm -rf /tmp/{{ Artefact.db_file }}"
+
