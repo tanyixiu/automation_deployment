@@ -20,11 +20,8 @@
     mode: get
 
 - name: import data to db
-  shell: "mysqldump -h {{ rds_host }} \
+  shell: "mysql -h {{ rds_host }} \
               -u{{DB.db_user_name}} \
               -p{{DB.db_user_pwd}} \
               --port=3306 \
-              --single-transaction \
-              --routines \
-              --triggers \
-              --databases  {{DB.db_name}} < /tmp/{{ Artefact.db_file }}"
+              < /tmp/{{ Artefact.db_file }}"
