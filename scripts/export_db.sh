@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mysqldump -h dm1dhugfpkfnwvd.ceyhvqsgxmc0.ap-northeast-1.rds.amazonaws.com \
+mysqldump -h dm14g4fw7su037s.ceyhvqsgxmc0.ap-northeast-1.rds.amazonaws.com \
     -utanyixiu \
     -ptanyixiu \
     --port=3306 \
